@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
   <title>Movie Data</title>
@@ -51,60 +51,3 @@
   </script>
 </body>
 </html>
- -->
-
-
- <!DOCTYPE html>
-<html>
-<head>
-  <title>Movie Details</title>
-</head>
-<body>
-  <h1>Movie Details</h1>
-  <input type="text" id="movieTitleInput" placeholder="Enter a movie title">
-  <button id="searchButton">Search</button>
-  <div id="movieDetails"></div>
-</body>
-<script>
-    // Function to fetch movie details from OMDB API
-function fetchMovieDetails(title) {
-  const apiKey = 'YOUR_OMDB_API_KEY'; // Replace with your OMDB API key
-  const apiUrl = `https://www.omdbapi.com/?apikey=${apiKey}&t=${title}`;
-
-  return fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => data)
-    .catch(error => {
-      console.error('Error:', error);
-      return null;
-    });
-}
-
-// Function to display movie details
-function displayMovieDetails(movie) {
-  if (!movie || movie.Response === 'False') {
-    document.getElementById('movieDetails').innerHTML = 'Movie not found.';
-    return;
-  }
-
-  const movieDetails = `
-    <h2>${movie.Title} (${movie.Year})</h2>
-    <p>Director: ${movie.Director}</p>
-    <p>Genre: ${movie.Genre}</p>
-    <p>Plot: ${movie.Plot}</p>
-    <img src="${movie.Poster}" alt="${movie.Title} Poster">
-  `;
-
-  document.getElementById('movieDetails').innerHTML = movieDetails;
-}
-
-// Event listener for the search button
-document.getElementById('searchButton').addEventListener('click', async () => {
-  const searchTerm = document.getElementById('movieTitleInput').value;
-  const movieData = await fetchMovieDetails(searchTerm);
-  displayMovieDetails(movieData);
-});
-
-</script>
-</html>
-

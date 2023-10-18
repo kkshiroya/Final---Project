@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Location & Online Status</title>
+</head>
+<body>
+  <h1>User Location & Online Status</h1>
+
+  <p>Click the button to get your location and check your online status:</p>
+
+  <button onclick="getLocationAndOnlineStatus()">Get Location & Online Status</button>
+
+  <p>User Location: <span id="location"></span></p>
+  <p>User Online Status: <span id="onlineStatus"></span></p>
+
+  <script>
+    function getLocationAndOnlineStatus() {
+      // Check if Geolocation is supported by the browser
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          const locationElement = document.getElementById("location");
+          locationElement.textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+        });
+
+        // Check if the user is online
+        const onlineStatusElement = document.getElementById("onlineStatus");
+
+        if (navigator.onLine) {
+          onlineStatusElement.textContent = "Online";
+          onlineStatusElement.style.color = "green"; // Online is displayed in green
+        } else {
+          onlineStatusElement.textContent = "Offline";
+          onlineStatusElement.style.color = "red"; // Offline is displayed in red
+        }
+
+        // Listen for online/offline events
+        window.addEventListener("online", function () {
+          onlineStatusElement.textContent = "Online";
+          onlineStatusElement.style.color = "green";
+        });
+
+        window.addEventListener("offline", function () {
+          onlineStatusElement.textContent = "Offline";
+          onlineStatusElement.style.color = "red";
+        });
+      } else {
+        alert("Geolocation is not supported by your browser.");
+      }
+    }
+  </script>
+</body>
+</html>

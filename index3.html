@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Color Generator</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Color Generator</h1>
+  <button id="generateColor">Generate Color</button>
+  <div id="colorDisplay"></div>
+
+  <script>
+    // Function to generate a random color in RGB format
+    function generateRandomColor() {
+      const r = Math.floor(Math.random() * 256);
+      const g = Math.floor(Math.random() * 256);
+      const b = Math.floor(Math.random() * 256);
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    // Function to update the displayed color
+    function updateColorDisplay() {
+      const color = generateRandomColor();
+      document.getElementById('colorDisplay').style.backgroundColor = color;
+      document.getElementById('colorDisplay').textContent = color;
+    }
+
+    // Generate a random color when the page is opened
+    window.onload = updateColorDisplay;
+
+    // Generate a random color on button click
+    const generateButton = document.getElementById('generateColor');
+    generateButton.addEventListener('click', updateColorDisplay);
+  </script>
+</body>
+</html>

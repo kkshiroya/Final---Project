@@ -1,0 +1,110 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>Movie Data</title>
+</head>
+<body>
+  <h1>Movie Data</h1>
+
+  <button onclick="getMovies()">Get Movies</button>
+
+  <div id="movies-list"></div>
+
+  <script>
+    async function getMovies() {
+      try {
+        const apiKey = 'YOUR_API_KEY';
+        const searchQuery = 'Harry Potter';
+        const apiUrl = `http://www.omdbapi.com/?apikey=[yourkey]&`;
+
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (data.Response === 'True') {
+          const movies = data.Search;
+          displayMovies(movies);
+        } else {
+          console.error('Error fetching movie data:', data.Error);
+        }
+      } catch (error) {
+        console.error('Error fetching movie data:', error);
+      }
+    }
+
+    function displayMovies(movies) {
+      const moviesList = document.getElementById('movies-list');
+      moviesList.innerHTML = '';
+
+      movies.forEach((movie) => {
+        const title = capitalizeFirstLetter(movie.Title);
+        const year = movie.Year;
+
+        const movieElement = document.createElement('p');
+        movieElement.textContent = `${title} (${year})`;
+        moviesList.appendChild(movieElement);
+      });
+    }
+
+    function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+  </script>
+</body>
+</html>
+ -->
+
+
+ <!DOCTYPE html>
+<html>
+<head>
+  <title>Movie Details</title>
+</head>
+<body>
+  <h1>Movie Details</h1>
+  <input type="text" id="movieTitleInput" placeholder="Enter a movie title">
+  <button id="searchButton">Search</button>
+  <div id="movieDetails"></div>
+</body>
+<script>
+    // Function to fetch movie details from OMDB API
+function fetchMovieDetails(title) {
+  const apiKey = 'YOUR_OMDB_API_KEY'; // Replace with your OMDB API key
+  const apiUrl = `https://www.omdbapi.com/?apikey=${apiKey}&t=${title}`;
+
+  return fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => data)
+    .catch(error => {
+      console.error('Error:', error);
+      return null;
+    });
+}
+
+// Function to display movie details
+function displayMovieDetails(movie) {
+  if (!movie || movie.Response === 'False') {
+    document.getElementById('movieDetails').innerHTML = 'Movie not found.';
+    return;
+  }
+
+  const movieDetails = `
+    <h2>${movie.Title} (${movie.Year})</h2>
+    <p>Director: ${movie.Director}</p>
+    <p>Genre: ${movie.Genre}</p>
+    <p>Plot: ${movie.Plot}</p>
+    <img src="${movie.Poster}" alt="${movie.Title} Poster">
+  `;
+
+  document.getElementById('movieDetails').innerHTML = movieDetails;
+}
+
+// Event listener for the search button
+document.getElementById('searchButton').addEventListener('click', async () => {
+  const searchTerm = document.getElementById('movieTitleInput').value;
+  const movieData = await fetchMovieDetails(searchTerm);
+  displayMovieDetails(movieData);
+});
+
+</script>
+</html>
+
